@@ -8,15 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.bookstore.domain.BookRepository;
+import com.example.bookstore.domain.CategoryRepository;
 import com.example.bookstore.domain.Book;
 
 @Controller
 public class BookController {
 
     private BookRepository repository;
+    private CategoryRepository crepository;
 
-    public BookController(BookRepository repository) {
+    public BookController(BookRepository repository, CategoryRepository crepository) {
         this.repository = repository;
+        this.crepository = crepository;
     }
 
     @GetMapping("/index")
