@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.bookstore.domain.BookRepository;
 import com.example.bookstore.domain.CategoryRepository;
@@ -29,6 +30,11 @@ public class BookController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/booklist")
     public String bookList(Model model) {
         model.addAttribute("books", repository.findAll());
@@ -47,6 +53,7 @@ public class BookController {
         return "redirect:booklist";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long bookId) {
         repository.deleteById(bookId);
